@@ -1,6 +1,7 @@
 import sqlite3
 
-con = sqlite3.connect("book_Data.DB")
+DB ="book_Data.DB"
+con = sqlite3.connect(DB)
 
 cursor = con.cursor()
 
@@ -16,6 +17,10 @@ con.commit()
 
 
 def list_of_book():
+
+    with sqlite3.connect(DB) as con:
+             cursor = con.cursor()
+             
     cursor.execute("SELECT * FROM  book_Data")
     for row in cursor.fetchall():
         print('\n')
@@ -23,8 +28,11 @@ def list_of_book():
     con.commit()
 
 def add_book(name):
-    cursor.execute("INSERT INTO book_Data(name)VALUES(?)",(name,))
-    con.commit()
+     with sqlite3.connect(DB) as con:
+         cursor = con.cursor()
+
+     cursor.execute("INSERT INTO book_Data(name)VALUES(?)",(name,))
+     con.commit()
 
 def update_book(id ,name):
     cursor.execute("UPDATE book_Data SET name=? Where id=?",(name,id))
