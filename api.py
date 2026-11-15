@@ -11,8 +11,7 @@ class Update(BaseModel):
     id : str
     name : str
 
-class Delete(BaseModel):
-    id : str
+
 
 
 @app.get("/")
@@ -25,4 +24,19 @@ def add_book_(book:Add):
 
 @app.get("/list_book")
 def list_book():
-    list_of_book()
+    books = list_of_book()
+    return{
+        "books":books
+    }
+
+@app.delete("/delete_book")
+def delete(id:str):
+    delete_book(id)
+
+@app.put("/update_book")
+def update(user:Update):
+    books = update_book(user.id,user.name)
+
+    return{
+        "books" :books
+    }

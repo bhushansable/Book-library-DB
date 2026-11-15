@@ -22,10 +22,8 @@ def list_of_book():
              cursor = con.cursor()
              
     cursor.execute("SELECT * FROM  book_Data")
-    for row in cursor.fetchall():
-        print('\n')
-        print(f"ID = {row[0]} , NAME = {row[1]}")
-    con.commit()
+    books = cursor.fetchall()
+    return books
 
 def add_book(name):
      with sqlite3.connect(DB) as con:
@@ -35,12 +33,20 @@ def add_book(name):
      con.commit()
 
 def update_book(id ,name):
-    cursor.execute("UPDATE book_Data SET name=? Where id=?",(name,id))
+
+    with sqlite3.connect(DB) as con:
+        cursor = con.cursor()
+
+    cursor.execute("UPDATE book_Data SET id=? Where name=?",(id,name))
     print("Book data update ")
     con.commit()
     
 
 def delete_book(id):
+
+    with sqlite3.connect(DB) as con:
+        cursor = con.cursor()
+
     cursor.execute("DELETE FROM book_Data WHERE id=?",(id,))
     print("Book data Delete")
     con.commit()
